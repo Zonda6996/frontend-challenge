@@ -6,8 +6,11 @@ import Image from 'next/image'
 import CatSkeleton from './CatSkeleton'
 import CatError from './CatError'
 import { useEffect, useRef } from 'react'
+import CatCard from './CatCard'
+import { useFavorites } from '@/app/shared/hooks/useFavorites'
 
 const CatGallery = () => {
+	const { favorites, isFavorite, toggleFavorite } = useFavorites()
 	const {
 		data,
 		isLoading,
@@ -24,6 +27,7 @@ const CatGallery = () => {
 			lastPage.length < 20 ? undefined : allPages.length,
 	})
 
+	const cats = data?.pages.flat() ?? []
 	const loaderRef = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
@@ -41,8 +45,6 @@ const CatGallery = () => {
 		return () => observer.disconnect()
 	}, [hasNextPage, isFetchingNextPage, fetchNextPage])
 
-	const cats = data?.pages.flat() ?? []
-
 	if (isLoading) return <CatSkeleton />
 	if (isError) return <CatError onRetry={refetch} />
 
@@ -50,13 +52,11 @@ const CatGallery = () => {
 		<div>
 			<div className='grid grid-cols-2 gap-4 md:gap-12 xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3'>
 				{cats.map(cat => (
-					<Image
+					<CatCard
 						key={cat.id}
-						src={cat.url}
-						alt='cat'
-						width={300}
-						height={300}
-						className='w-full h-[225px] object-cover'
+						cat={cat}
+						isFavorite={isFavorite(cat.id)}
+						onToggle={toggleFavorite}
 					/>
 				))}
 			</div>
