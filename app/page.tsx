@@ -1,8 +1,5 @@
+import CatGallery from './widgets/CatGallery/CatGallery'
 
-export default function Home() {
-  return (
-	<div>
-	  <h1>Кошачий пинтерест</h1>
-	</div>
-  )
+export default async function HomePage() {
+	return <CatGallery />
 }
