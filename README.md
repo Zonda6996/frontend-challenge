@@ -3,7 +3,7 @@
 Интерфейс для просмотра котиков с возможностью добавления их в "любимые".  
 Реализован с использованием React, Next.js, TypeScript, TailwindCSS и React Query.
 
-[Посмотреть демо на Vercel](https://frontend-challenge-nu-eight.vercel.app/)
+[Посмотреть демо на Vercel](https://frontend-challenge-60gogaaib-zonda6996s-projects.vercel.app/)
 
 ---
 
@@ -105,7 +105,7 @@ export async function getCats(page = 0, limit = 20) {
 ## Деплой
 
 - GitHub Pages не поддерживает SSR и environment variables → деплой невозможен  
-- Проект успешно развернут на Vercel → [ссылка на демо](https://frontend-challenge-nu-eight.vercel.app/)
+- Проект успешно развернут на Vercel → [ссылка на демо](https://frontend-challenge-60gogaaib-zonda6996s-projects.vercel.app/)
 
 ---
 
