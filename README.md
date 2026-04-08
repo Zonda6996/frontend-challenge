@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Кошачий Pinterest 🐱
 
-## Getting Started
+Интерфейс для просмотра котиков с возможностью добавления их в "любимые".  
+Реализован с использованием React, Next.js, TypeScript, TailwindCSS и React Query.
 
-First, run the development server:
+[Посмотреть демо на Vercel](https://frontend-challenge-nu-eight.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Функционал
+
+- Вкладка "Все котики" по умолчанию
+- Возможность добавлять котиков в "любимые" и убирать из них
+- Данные о "любимых" котиках хранятся на клиенте
+- Вкладка "Любимые котики" отображает добавленных котиков
+- Бесконечная прокрутка для подгрузки новых котиков
+- Адаптивный интерфейс для разных размеров экрана
+
+---
+
+## Стек технологий
+
+- React
+- Next.js
+- TypeScript
+- TailwindCSS
+- React Query
+
+---
+
+## Установка и запуск
+
+1. Устанавливаем зависимости:
+
+```
+npm install
+# или
+yarn
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Создаём файл `.env.local` (если нужен API key):
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+NEXT_PUBLIC_CAT_API=ваш_ключ_TheCatAPI
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+> Проект работает и без ключа API, но рекомендуется использовать ключ для стабильности.
 
-## Learn More
+3. Запуск локального сервера разработки:
 
-To learn more about Next.js, take a look at the following resources:
+```
+npm run dev
+# или
+yarn dev
+```
+Проект будет доступен по адресу http://localhost:3000.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Структура проекта
 
-## Deploy on Vercel
+```
+app/
+  favorites/          # Страница "Любимые котики"
+  shared/
+    api/              # API для получения котиков
+    hooks/            # Кастомные хуки, например useFavorites
+    ui/               # Общие UI-компоненты
+  widgets/
+    CatGallery/       # Компоненты галереи котиков
+      CatCard.tsx
+      CatError.tsx
+      CatGallery.tsx
+      CatSkeleton.tsx
+  layout.tsx          # Общий layout приложения
+  page.tsx            # Главная страница "Все котики"
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## API
+
+Используется TheCatAPI:
+
+```
+const API_URL = 'https://api.thecatapi.com/v1/images/search'
+
+export async function getCats(page = 0, limit = 20) {
+  const res = await fetch(`${API_URL}?limit=${limit}&page=${page}&order=ASC`, {
+    headers: {
+      'x-api-key': process.env.NEXT_PUBLIC_CAT_API as string,
+    },
+  })
+  if (!res.ok) throw new Error('Failed to fetch cats')
+  return res.json()
+}
+```
+
+- `limit` — количество котиков за один запрос  
+- `page` — номер страницы для бесконечной прокрутки  
+- `NEXT_PUBLIC_CAT_API` — ключ для API (не обязателен, но рекомендуется)  
+
+---
+
+## Деплой
+
+- GitHub Pages не поддерживает SSR и environment variables → деплой невозможен  
+- Проект успешно развернут на Vercel → [ссылка на демо](https://frontend-challenge-nu-eight.vercel.app/)
+
+---
+
+## Демо
+
+<h3>Главная страница</h3>
+<img width="1901" height="815" alt="image" src="https://github.com/user-attachments/assets/a8c9a002-4c50-4412-b03b-b71ebe834aeb" />
+<h3>Страница "Любимые котики"</h3>
+<img width="1918" height="832" alt="image" src="https://github.com/user-attachments/assets/ca4186f9-a1ae-4e1d-983b-1fe5833ccefa" />
+
