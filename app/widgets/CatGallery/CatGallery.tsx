@@ -24,7 +24,11 @@ const CatGallery = () => {
 		queryFn: ({ pageParam }) => getCats(pageParam),
 		initialPageParam: 0,
 		getNextPageParam: (lastPage, allPages) =>
-			lastPage.length < 20 ? undefined : allPages.length,
+			lastPage.length === 0 ? undefined : allPages.length,
+
+		refetchOnWindowFocus: false,
+		refetchOnMount: false,
+		refetchOnReconnect: false,
 	})
 
 	const cats = data?.pages.flat() ?? []
@@ -37,7 +41,7 @@ const CatGallery = () => {
 					fetchNextPage()
 				}
 			},
-			{ threshold: 0.1 },
+			{ threshold: 1.0 },
 		)
 
 		if (loaderRef.current) observer.observe(loaderRef.current)
